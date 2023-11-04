@@ -5,6 +5,14 @@ class DirectorsController < ApplicationController
     render({ :template => "director_templates/list" })
   end
 
+  def index_youngest
+    matching_young = Director.where.not(dob: nil)
+    youngest_director = matching_young.order(dob: :asc).last
+    @youngest_director = youngest_director
+    render(template: "director_templates/list_young")
+  end
+
+
   def show
     the_id = params.fetch("the_id")
     matching_records = Director.where({:id => the_id })
